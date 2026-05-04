@@ -1,8 +1,9 @@
-version: "3"
-
 services:
   backend:
-    build: "./Aula 3"
+    build: .
     restart: always
     ports:
       - "8000:8000"
+  test:
+    build: .
+    command: ["pytest", "-q"]
