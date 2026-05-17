@@ -1,0 +1,47 @@
+services:
+  api:
+    build: .
+    container_name: alunos_api
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/alunos_db
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:15
+    container_name: alunos_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: alunos_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./app/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d alunos_db"]
+      interval: 3s
+      timeout: 5s
+      retries: 10
+
+  tests:
+    build: .
+    command: ["pytest", "-v"]
+    volumes:
+      - .:/app
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/alunos_db
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
