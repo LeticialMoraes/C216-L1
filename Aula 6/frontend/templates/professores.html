@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block body %}
+    <article class="card">
+        <h2>Lista de professores</h2>
+        {% if professores %}
+            <table class="data">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Sala</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for prof in professores %}
+                    <tr>
+                        <td>{{ prof.id }}</td>
+                        <td>{{ prof.nome }}</td>
+                        <td>{{ prof.email }}</td>
+                        <td>{{ prof.sala_de_atendimento }}</td>
+                        <td>
+                            <a href="{{ url_for('editar', professor_id=prof.id) }}" class="btn-sm btn-edit">Editar</a>
+                            <a href="{{ url_for('excluir', professor_id=prof.id) }}" class="btn-sm btn-del">Excluir</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="lead">Nenhum professor cadastrado ainda.</p>
+        {% endif %}
+    </article>
+{% endblock %}

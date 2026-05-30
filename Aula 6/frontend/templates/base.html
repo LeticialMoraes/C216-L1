@@ -15,9 +15,13 @@
                 <a href="{{ url_for('home') }}" class="{% if request.path == '/' %}ativo{% endif %}">Início</a>
                 <a href="{{ url_for('about') }}" class="{% if request.path == '/about' %}ativo{% endif %}">Sobre</a>
                 <a href="{{ url_for('contact') }}" class="{% if request.path == '/contact' %}ativo{% endif %}">Contato</a>
+                <a href="{{ url_for('professores') }}" class="{% if request.path == '/professores' %}ativo{% endif %}">Professores</a>
+                <a href="{{ url_for('cadastro') }}" class="{% if request.path == '/cadastro' %}ativo{% endif %}">Cadastro</a>
+                <a href="{{ url_for('reset') }}" class="menu-reset">Reset DB</a>
             </nav>
         </aside>
         <main class="conteudo">
+            {% include '_messages.html' %}
             {% block body %}{% endblock %}
         </main>
     </div>

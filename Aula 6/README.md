@@ -1,46 +1,55 @@
 # Aula 6 — Frontend Flask + Docker Compose
 
-Prática de frontend com **Flask** (templates Jinja), orquestrada com **Docker Compose** (frontend + backend + PostgreSQL).
+Frontend em **Flask** (templates Jinja), com **layout** em sidebar (`base.html`, `styles.css`) e integração **Docker Compose** entre frontend, **FastAPI** no backend e **PostgreSQL**. Há as páginas da prática (início, sobre, contato) e o fluxo de **gestão de professores** (cadastro, listagem, edição, exclusão e reset do banco), com o frontend chamando a API via `requests`.
 
-## O que tem aqui
+## Estrutura do frontend (`frontend/`)
 
-- **frontend**: Flask na porta **3000** — rotas `/` (início), `/about` (sobre) e `/contact` (contato).
-- **backend**: Flask mínimo na porta **8000** (ex.: `/health`).
-- **db**: PostgreSQL 15 com script em `backend/db/init.sql`.
+| Arquivo | Função |
+|---------|--------|
+| `app.py` | Rotas + `context_processor` (nome e matrícula em todas as páginas) + `requests` à `API_URL`. |
+| `templates/base.html` | Layout lateral + menu (Início, Sobre, Contato, Professores, Cadastro, Reset DB). |
+| `static/styles.css` | Tema pastel original. |
+| `templates/_messages.html` | Mensagens `flash` com classes do seu CSS (`.flash-success`, etc.). |
+| `templates/home.html`, `about.html`, `contact.html` | Páginas da entrega (`extends base.html`). |
+| `templates/cadastro.html`, `editar.html`, `professores.html` | CRUD (`extends base.html`, mesmo layout). |
+| `templates/navbar.html` | Menu em estilo Bootstrap para páginas HTML completas que não usam `base.html`. |
 
+## Backend e banco
+
+- **FastAPI** em `backend/main.py` — rotas `/api/v1/professores/...`.
+- **PostgreSQL** — `backend/db/init.sql` (tabela `professores` com `nome`, `email`, `sala_de_atendimento`).
 
 ## Como rodar
 
-Na pasta `Aula 6`:
-
 ```bash
+cd "Aula 6"
 docker compose up --build
 ```
 
-No navegador:
+| URL | Página |
+|-----|--------|
+| http://127.0.0.1:3000/ | Home |
+| http://127.0.0.1:3000/about | Sobre |
+| http://127.0.0.1:3000/contact | Contato |
+| http://127.0.0.1:3000/cadastro | Cadastro |
+| http://127.0.0.1:3000/professores | Lista |
+| http://127.0.0.1:8000/docs | Documentação da API (opcional) |
 
-- [http://127.0.0.1:3000/](http://127.0.0.1:3000/) — início  
-- [http://127.0.0.1:3000/about](http://127.0.0.1:3000/about) — sobre  
-- [http://127.0.0.1:3000/contact](http://127.0.0.1:3000/contact) — contato  
+Variável **`API_URL`** no `docker-compose` aponta o frontend para o backend na rede Docker.
 
-Para encerrar: `Ctrl+C` ou `docker compose down`.
+Se mudar o `init.sql` e o banco já existir, recrie o volume:
 
-A porta **5434** no host mapeia o Postgres e evita conflito com outras instâncias locais (`5432` / `5433`).
+```bash
+docker compose down -v
+docker compose up --build
+```
 
----
-
-## Prints da atividade (`img/`)
-
-
-| Arquivo | O que é |
-|---------|---------|
-| [`img/logs-frontend.png`](img/logs-frontend.png) | Logs do container **frontend** (`aula6_frontend` — Flask na 3000, requisições `/`, `/about`, `/contact`). |
-| [`img/home.png`](img/home.png) | Página **início** (`/`). |
-| [`img/contato.png`](img/contato.png) | Página **contato** (`/contact`). |
-| [`img/sobre.png`](img/sobre.png) | Página **sobre** (`/about`). |
-
-**Opcional:** [`img/docker-desktop-aula6.png`](img/docker-desktop-aula6.png) — visão do projeto no Docker Desktop com os três serviços 
-
-Ou no Docker Desktop: container **aula6_frontend** → aba **Logs**.
+Postgres no host: **5434** → 5432 no container.
 
 ---
+
+## Prints (`img/`)
+
+Atualize os prints se a interface mudou: home (`/`), contato (`/contact`), sobre (`/about`), logs do container `aula6_frontend`.
+
+`docker logs aula6_frontend`

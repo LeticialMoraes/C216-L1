@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block body %}
+    <article class="card">
+        <h2>Cadastrar novo professor</h2>
+        <p class="lead text-muted">Os dados são enviados à API no backend.</p>
+        <form method="post">
+            <div class="form-field">
+                <label for="nome">Nome</label>
+                <input id="nome" type="text" name="nome" required>
+            </div>
+            <div class="form-field">
+                <label for="email">Email</label>
+                <input id="email" type="email" name="email" required>
+            </div>
+            <div class="form-field">
+                <label for="sala">Sala de atendimento</label>
+                <input id="sala" type="text" name="sala_de_atendimento" required>
+            </div>
+            <button type="submit" class="btn-submit">Cadastrar</button>
+        </form>
+    </article>
+{% endblock %}

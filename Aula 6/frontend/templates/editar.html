@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block body %}
+    <article class="card">
+        <h2>Editar professor</h2>
+        <form method="post">
+            <div class="form-field">
+                <label for="nome">Nome</label>
+                <input id="nome" type="text" name="nome" value="{{ professor.nome }}" required>
+            </div>
+            <div class="form-field">
+                <label for="email">Email</label>
+                <input id="email" type="email" name="email" value="{{ professor.email }}" required>
+            </div>
+            <div class="form-field">
+                <label for="sala">Sala de atendimento</label>
+                <input id="sala" type="text" name="sala_de_atendimento" value="{{ professor.sala_de_atendimento }}" required>
+            </div>
+            <button type="submit" class="btn-submit">Salvar alterações</button>
+        </form>
+    </article>
+{% endblock %}

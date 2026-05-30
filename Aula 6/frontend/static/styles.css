@@ -1,17 +1,13 @@
 :root {
-    /* Rosas — base quente */
     --blush: #fff4f7;
     --petal: #ffe8ef;
     --rosa-barra: linear-gradient(180deg, #ffe0ea 0%, #ffd6e4 100%);
     --rosa-borda: #f3b8cc;
     --rosa-forte: #c73e6b;
     --rosa-texto: #9a3056;
-
-    /* Lilás — acentos */
     --lilas: #9b8bc9;
     --lilas-claro: #e8e2f4;
     --lilas-borda: #cfc2e8;
-
     --texto: #3a2a35;
     --muted: #6b5560;
     --card: #fffdfb;
@@ -25,7 +21,6 @@
 body {
     margin: 0;
     font-family: "Segoe UI", system-ui, sans-serif;
-    /* Área principal mais “pêssego/rosa”, canto com toque lilás */
     background:
         radial-gradient(900px 500px at 100% 0%, var(--lilas-claro) 0%, transparent 55%),
         linear-gradient(165deg, var(--blush) 0%, var(--petal) 45%, #fff9fb 100%);
@@ -46,7 +41,6 @@ body {
     box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.5);
 }
 
-/* Marca em lilás — contraste com a lateral rosa */
 .brand {
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -85,7 +79,6 @@ body {
     border-color: var(--lilas-borda);
 }
 
-/* Ativo: fundo lilás claro + borda rosa */
 .menu a.ativo {
     background: var(--lilas-claro);
     border-color: var(--rosa-borda);
@@ -93,9 +86,50 @@ body {
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
+.menu a.menu-reset {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #a33;
+}
+
+.menu a.menu-reset:hover {
+    border-color: #e57373;
+    background: rgba(255, 235, 238, 0.6);
+}
+
 .conteudo {
     flex: 1;
     padding: 2.5rem clamp(1.25rem, 4vw, 3rem);
+}
+
+.flash-stack {
+    max-width: 640px;
+    margin-bottom: 1rem;
+}
+
+.flash {
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.flash-success {
+    background: #e8f8ef;
+    color: #1b5e20;
+    border: 1px solid #b9e6c4;
+}
+
+.flash-danger {
+    background: #fff0f3;
+    color: #b71c1c;
+    border: 1px solid #f8bbd0;
+}
+
+.flash-info {
+    background: #e3f2fd;
+    color: #0d47a1;
+    border: 1px solid #90caf9;
 }
 
 .card {
@@ -108,11 +142,16 @@ body {
     border-top: 3px solid var(--rosa-borda);
 }
 
-.card h1 {
+.card h1,
+.card h2 {
     margin-top: 0;
     font-size: 1.75rem;
     font-weight: 700;
     color: var(--rosa-texto);
+}
+
+.card h2 {
+    font-size: 1.35rem;
 }
 
 .lead {
@@ -132,15 +171,6 @@ code {
 .lista {
     color: var(--muted);
     line-height: 1.6;
-}
-
-.nota {
-    font-size: 0.95rem;
-    border-left: 3px solid var(--lilas);
-    padding: 0.75rem 1rem;
-    color: var(--muted);
-    background: rgba(232, 226, 244, 0.45);
-    border-radius: 0 10px 10px 0;
 }
 
 .contato dt {
@@ -164,37 +194,18 @@ code {
     color: var(--muted);
 }
 
-/* Extras (gestão de alunos, etc.) */
-.flash-ok,
-.alert-success {
-    background: #e8f8ef;
-    color: #1b5e20;
-    border: 1px solid #b9e6c4;
-    padding: 0.75rem 1rem;
-    border-radius: 10px;
+.form-field {
     margin-bottom: 1rem;
 }
 
-.flash-erro,
-.alert-error {
-    background: #fff0f3;
-    color: #b71c1c;
-    border: 1px solid #f8bbd0;
-    padding: 0.75rem 1rem;
-    border-radius: 10px;
-    margin-bottom: 1rem;
-}
-
-.form-card label {
+.form-field label {
     display: block;
     font-weight: 600;
     color: var(--rosa-texto);
-    margin-top: 0.75rem;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.35rem;
 }
 
-.form-card input,
-.form-card select {
+.form-field input {
     width: 100%;
     max-width: 420px;
     padding: 0.5rem 0.65rem;
@@ -203,9 +214,9 @@ code {
     background: #fffafc;
 }
 
-.btn-primary {
-    margin-top: 1rem;
-    padding: 0.6rem 1.25rem;
+.btn-submit {
+    margin-top: 0.5rem;
+    padding: 0.55rem 1.2rem;
     border: none;
     border-radius: 10px;
     cursor: pointer;
@@ -215,22 +226,29 @@ code {
     box-shadow: 0 4px 16px rgba(199, 62, 107, 0.28);
 }
 
-.btn-primary:hover {
+.btn-submit:hover {
     filter: brightness(1.06);
 }
 
-.btn-danger {
+.btn-sm {
+    display: inline-block;
     padding: 0.35rem 0.75rem;
     border-radius: 8px;
-    border: 1px solid #e57373;
-    background: #fff5f5;
-    color: #c62828;
-    cursor: pointer;
     font-size: 0.85rem;
+    text-decoration: none;
+    margin-right: 0.35rem;
 }
 
-.btn-danger:hover {
+.btn-edit {
+    background: #fff8e1;
+    border: 1px solid #ffb74d;
+    color: #e65100;
+}
+
+.btn-del {
     background: #ffebee;
+    border: 1px solid #e57373;
+    color: #c62828;
 }
 
 table.data {
@@ -251,13 +269,6 @@ table.data td {
     padding: 0.5rem 0.35rem;
     border-bottom: 1px solid rgba(243, 184, 204, 0.45);
     color: var(--texto);
-}
-
-h2.section {
-    color: var(--rosa-texto);
-    font-size: 1.15rem;
-    margin-top: 1.75rem;
-    margin-bottom: 0.5rem;
 }
 
 @media (max-width: 720px) {

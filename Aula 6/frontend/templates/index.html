@@ -1,16 +1,23 @@
-{% extends "base.html" %}
-{% block body %}
-    <article class="card">
-        <h1>Olá, sou {{ aluna }}</h1>
-        <p class="lead">
-            Esta é a página inicial do meu frontend em <strong>Flask</strong>, servindo templates com
-            <code>render_template</code> e organização com layout base em Jinja2.
-        </p>
-        <p>
-            Matrícula: <strong>{{ matricula }}</strong> — projeto da <strong>Aula 6</strong> (Sistemas Distribuídos).
-        </p>
-        <ul class="lista">
-            <li>Navegação lateral com três rotas: <em>início</em>, <em>sobre</em> e <em>contato</em>.</li>
-        </ul>
-    </article>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - Sistema de Professores</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="container mt-3">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    <div class="container mt-5">
+        <h1 class="text-center">Bem-vindo ao Sistema de Gerenciamento de Professores</h1>
+    </div>
+</body>
+</html>
