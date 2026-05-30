@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ titulo }} — Prática Flask</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <p class="brand">C216 · L1</p>
+            <p class="meta">{{ aluna }}<br><span>Matrícula {{ matricula }}</span></p>
+            <nav class="menu">
+                <a href="{{ url_for('home') }}" class="{% if request.path == '/' %}ativo{% endif %}">Início</a>
+                <a href="{{ url_for('about') }}" class="{% if request.path == '/about' %}ativo{% endif %}">Sobre</a>
+                <a href="{{ url_for('contact') }}" class="{% if request.path == '/contact' %}ativo{% endif %}">Contato</a>
+            </nav>
+        </aside>
+        <main class="conteudo">
+            {% block body %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>

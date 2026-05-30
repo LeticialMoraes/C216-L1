@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block body %}
+    <article class="card">
+        <h1>Sobre esta entrega</h1>
+        <p>
+            Meu nome é <strong>{{ aluna }}</strong> e minha matrícula é <strong>{{ matricula }}</strong>.
+        </p>
+        <p>
+            Esta página descreve o objetivo da prática: expor um frontend simples com Flask, em container,
+            integrado ao <code>docker-compose</code> junto ao backend e ao PostgreSQL, conforme o roteiro da aula.
+        </p>
+    </article>
+{% endblock %}

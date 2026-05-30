@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block body %}
+    <article class="card">
+        <h1>Fale comigo (dados fictícios)</h1>
+        <p class="lead">Informações de exemplo para a atividade — não são contatos reais.</p>
+        <dl class="contato">
+            <dt>E-mail</dt>
+            <dd>leticia.moraes352@estudante.inatel.br</dd>
+            <dt>Telefone</dt>
+            <dd>(35) 90000-0352</dd>
+            <dt>Endereço</dt>
+            <dd>Rua das Magnólias, 120 — Bairro Centro — Santa Rita do Sapucaí/MG</dd>
+            <dt>Horário</dt>
+            <dd>Segunda a sexta, 14h às 18h (fictício)</dd>
+        </dl>
+        <p class="rodape-card">Aluna: {{ aluna }} · Matrícula {{ matricula }}</p>
+    </article>
+{% endblock %}

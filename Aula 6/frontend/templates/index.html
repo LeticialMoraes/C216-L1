@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block body %}
+    <article class="card">
+        <h1>Olá, sou {{ aluna }}</h1>
+        <p class="lead">
+            Esta é a página inicial do meu frontend em <strong>Flask</strong>, servindo templates com
+            <code>render_template</code> e organização com layout base em Jinja2.
+        </p>
+        <p>
+            Matrícula: <strong>{{ matricula }}</strong> — projeto da <strong>Aula 6</strong> (Sistemas Distribuídos).
+        </p>
+        <ul class="lista">
+            <li>Navegação lateral com três rotas: <em>início</em>, <em>sobre</em> e <em>contato</em>.</li>
+        </ul>
+    </article>
+{% endblock %}
