@@ -47,9 +47,3 @@ docker compose up --build
 Postgres no host: **5434** → 5432 no container.
 
 ---
-
-## Prints (`img/`)
-
-Atualize os prints se a interface mudou: home (`/`), contato (`/contact`), sobre (`/about`), logs do container `aula6_frontend`.
-
-`docker logs aula6_frontend`
