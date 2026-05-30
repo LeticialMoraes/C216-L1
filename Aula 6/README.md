@@ -41,6 +41,5 @@ A porta **5434** no host mapeia o Postgres e evita conflito com outras instânci
 
 **Opcional:** [`img/docker-desktop-aula6.png`](img/docker-desktop-aula6.png) — visão do projeto no Docker Desktop com os três serviços 
 
-Ou no Docker Desktop: container **aula6_frontend** → aba **Logs**.
 
 ---
