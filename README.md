@@ -17,6 +17,7 @@ Cada pasta de aula é independente (dependências, `Dockerfile` ou `docker-compo
 | **Aula 4** | API de alunos (FastAPI), Docker e testes. |
 | **Aula 5** | Evolução com PostgreSQL, camadas de serviço e `docker-compose` (API + banco + testes em container). |
 | [**Aula 6**](Aula%206/) | Frontend **Flask** (templates Jinja), páginas início / sobre / contato, **Docker Compose** (frontend + backend + Postgres). Detalhes e comandos em [**Aula 6/README.md**](Aula%206/README.md). |
+| [**Projeto**](Projeto/) | Projeto da disciplina (frontend React + backend Node). Documentação em [**Projeto/README.md**](Projeto/README.md). |
 
 ---
 
