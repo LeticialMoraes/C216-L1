@@ -357,7 +357,11 @@ export function ProdutosPage() {
                       className="px-5 py-10 text-neutral-500"
                       colSpan={7}
                     >
-                      Nenhum produto encontrado.
+                      {produtos.length === 0
+                        ? "Nenhum produto cadastrado."
+                        : busca.trim()
+                          ? `Nenhum produto encontrado para "${busca.trim()}".`
+                          : "Nenhum produto encontrado com os filtros selecionados."}
                     </td>
                   </tr>
                 ) : (

@@ -1,7 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { FormEvent } from "react";
 import { SideBar } from "../components/SideBar";
-import { FornecedoresPanel } from "../components/FornecedoresPanel";
 import { categoryIconColors, theme } from "../constants/theme";
 import {
   atualizarCategoria,
@@ -38,6 +37,7 @@ function DeleteIcon() {
 export function CategoriasPage() {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [loading, setLoading] = useState(true);
+  const [busca, setBusca] = useState("");
   const [novaCategoria, setNovaCategoria] = useState("");
   const [criando, setCriando] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
@@ -62,6 +62,20 @@ export function CategoriasPage() {
   useEffect(() => {
     void carregarCategorias();
   }, [carregarCategorias]);
+
+  const categoriasFiltradas = useMemo(() => {
+    const termo = busca.trim().toLowerCase();
+    if (!termo) {
+      return categorias;
+    }
+    return categorias.filter(
+      (categoria) =>
+        categoria.nome.toLowerCase().includes(termo) ||
+        (categoria.descricao?.toLowerCase().includes(termo) ?? false),
+    );
+  }, [categorias, busca]);
+
+  const totalExibido = busca.trim() ? categoriasFiltradas.length : categorias.length;
 
   async function handleCriar(e: FormEvent) {
     e.preventDefault();
@@ -161,15 +175,20 @@ export function CategoriasPage() {
     >
       <SideBar />
 
-      <main className="flex min-w-0 flex-1 flex-col px-6 py-8 sm:px-10 lg:px-12">
-        <header className="mb-8">
+      <main className="flex min-h-0 min-w-0 flex-1 flex-col px-6 py-8 sm:px-10 lg:px-12">
+        <header className="mb-8 shrink-0">
+          <p
+            className="m-0 mb-1 text-xs font-semibold uppercase tracking-[0.18em]"
+            style={{ color: theme.muted }}
+          >
+            Organização do catálogo
+          </p>
           <h1 className="m-0 font-['Playfair_Display',Georgia,serif] text-[clamp(1.75rem,3vw,2.25rem)] font-semibold tracking-tight text-neutral-900">
-            Categorias e Fornecedores
+            Categorias
           </h1>
         </header>
 
-      <div className="grid gap-6 xl:grid-cols-2">
-        <section className="flex flex-col overflow-hidden rounded-2xl border border-[#ECEAF5] bg-white shadow-[0_8px_30px_rgba(62,59,130,0.06)]">
+        <section className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl border border-[#ECEAF5] bg-white shadow-[0_8px_30px_rgba(62,59,130,0.06)]">
           <div className="flex items-center justify-between border-b border-[#F0EEF8] px-5 py-4">
             <h2
               className="m-0 text-base font-semibold"
@@ -184,12 +203,21 @@ export function CategoriasPage() {
                 color: theme.primary,
               }}
             >
-              {categorias.length} cadastrada
-              {categorias.length === 1 ? "" : "s"}
+              {totalExibido} cadastrada
+              {totalExibido === 1 ? "" : "s"}
             </span>
           </div>
 
-          <div className="min-h-[280px] flex-1">
+          <div className="border-b border-[#F0EEF8] p-4">
+            <input
+              className={inputClass}
+              placeholder="Buscar por nome…"
+              value={busca}
+              onChange={(e) => setBusca(e.target.value)}
+            />
+          </div>
+
+          <div className="min-h-0 flex-1 overflow-y-auto">
             {loading ? (
               <p className="px-5 py-8 text-sm text-neutral-500">
                 A carregar categorias…
@@ -198,9 +226,13 @@ export function CategoriasPage() {
               <p className="px-5 py-8 text-sm text-neutral-500">
                 Nenhuma categoria cadastrada. Adicione a primeira abaixo.
               </p>
+            ) : categoriasFiltradas.length === 0 ? (
+              <p className="px-5 py-8 text-sm text-neutral-500">
+                Nenhuma categoria encontrada para &quot;{busca.trim()}&quot;.
+              </p>
             ) : (
               <ul className="m-0 list-none divide-y divide-[#F0EEF8] p-0">
-                {categorias.map((categoria, index) => {
+                {categoriasFiltradas.map((categoria, index) => {
                   const isEditing = editingId === categoria.id;
                   const iconColor =
                     categoryIconColors[index % categoryIconColors.length];
@@ -322,9 +354,6 @@ export function CategoriasPage() {
             </button>
           </form>
         </section>
-
-        <FornecedoresPanel />
-      </div>
       </main>
     </div>
   );

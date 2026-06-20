@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { theme } from "../constants/theme";
 import {
   FornecedorFormModal,
@@ -67,9 +67,13 @@ function validateForm(values: FornecedorFormValues): string | null {
   return null;
 }
 
+const inputClass =
+  "w-full rounded-lg border border-neutral-200 bg-white px-3 py-2.5 text-sm text-neutral-900 outline-none transition placeholder:text-neutral-400 focus:border-[#3E3B82] focus:ring-2 focus:ring-[#3E3B82]/10";
+
 export function FornecedoresPanel() {
   const [fornecedores, setFornecedores] = useState<Fornecedor[]>([]);
   const [loading, setLoading] = useState(true);
+  const [busca, setBusca] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState<"create" | "edit">("create");
   const [editingFornecedor, setEditingFornecedor] = useState<Fornecedor | null>(
@@ -95,6 +99,22 @@ export function FornecedoresPanel() {
   useEffect(() => {
     void carregarFornecedores();
   }, [carregarFornecedores]);
+
+  const fornecedoresFiltrados = useMemo(() => {
+    const termo = busca.trim().toLowerCase();
+    if (!termo) {
+      return fornecedores;
+    }
+    return fornecedores.filter((fornecedor) => {
+      const telefone = fornecedor.telefone?.replace(/\D/g, "") ?? "";
+      const termoNumeros = termo.replace(/\D/g, "");
+      return (
+        fornecedor.nome.toLowerCase().includes(termo) ||
+        (fornecedor.email?.toLowerCase().includes(termo) ?? false) ||
+        (termoNumeros.length > 0 && telefone.includes(termoNumeros))
+      );
+    });
+  }, [fornecedores, busca]);
 
   function abrirCriacao() {
     setModalMode("create");
@@ -184,7 +204,7 @@ export function FornecedoresPanel() {
 
   return (
     <>
-      <section className="flex flex-col overflow-hidden rounded-2xl border border-[#ECEAF5] bg-white shadow-[0_8px_30px_rgba(62,59,130,0.06)]">
+      <section className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl border border-[#ECEAF5] bg-white shadow-[0_8px_30px_rgba(62,59,130,0.06)]">
         <div className="flex items-center justify-between border-b border-[#F0EEF8] px-5 py-4">
           <h2
             className="m-0 text-base font-semibold"
@@ -202,7 +222,16 @@ export function FornecedoresPanel() {
           </button>
         </div>
 
-        <div className="min-h-[280px] flex-1">
+        <div className="border-b border-[#F0EEF8] p-4">
+          <input
+            className={inputClass}
+            placeholder="Buscar por nome, e-mail ou telefone…"
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
+          />
+        </div>
+
+        <div className="min-h-0 flex-1 overflow-y-auto">
           {loading ? (
             <p className="px-5 py-8 text-sm text-neutral-500">
               A carregar fornecedores…
@@ -212,9 +241,13 @@ export function FornecedoresPanel() {
               Nenhum fornecedor cadastrado. Clique em &quot;+ Novo&quot; para
               adicionar.
             </p>
+          ) : fornecedoresFiltrados.length === 0 ? (
+            <p className="px-5 py-8 text-sm text-neutral-500">
+              Nenhum fornecedor encontrado para &quot;{busca.trim()}&quot;.
+            </p>
           ) : (
             <ul className="m-0 list-none divide-y divide-[#F0EEF8] p-0">
-              {fornecedores.map((fornecedor) => (
+              {fornecedoresFiltrados.map((fornecedor) => (
                 <li
                   key={fornecedor.id}
                   className="flex items-center gap-3 px-5 py-4"

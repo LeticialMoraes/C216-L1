@@ -45,8 +45,7 @@ const navItems: NavItem[] = [
   },
   {
     label: "Fornecedores",
-    path: "#",
-    disabled: true,
+    path: paths.suppliers,
     icon: (
       <path
         fill="currentColor"

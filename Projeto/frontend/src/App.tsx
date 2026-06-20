@@ -3,6 +3,7 @@ import { MessageToastContainer } from "./components/MessageToastContainer";
 import { ConfirmDialogContainer } from "./components/ConfirmDialogContainer";
 import { RequireAuth } from "./components/RequireAuth";
 import { CategoriasPage } from "./pages/CategoriasPage";
+import { FornecedoresPage } from "./pages/FornecedoresPage";
 import { ProdutosPage } from "./pages/ProdutosPage";
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
@@ -33,6 +34,14 @@ export default function App() {
           element={
             <RequireAuth>
               <CategoriasPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path={paths.suppliers}
+          element={
+            <RequireAuth>
+              <FornecedoresPage />
             </RequireAuth>
           }
         />

@@ -4,5 +4,6 @@ export const paths = {
   register: "/register",
   login: "/login",
   categories: "/categories",
+  suppliers: "/suppliers",
   products: "/products",
 } as const;
