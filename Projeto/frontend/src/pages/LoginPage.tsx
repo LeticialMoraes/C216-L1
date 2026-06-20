@@ -82,7 +82,7 @@ export function LoginPage() {
       messageToasts.success(
         `Sessão iniciada como ${user.firstName} ${user.lastName}.`,
       );
-      navigate(paths.categories);
+      navigate(paths.products);
     } catch (err) {
       messageToasts.error(
         err instanceof Error ? err.message : "Erro ao iniciar sessão.",

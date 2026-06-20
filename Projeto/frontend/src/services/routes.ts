@@ -16,5 +16,12 @@ export const routes = {
     list: () => `${apiBase}/fornecedores`,
     byId: (id: number) => `${apiBase}/fornecedores/${id}`,
   },
+  produtos: {
+    list: () => `${apiBase}/produtos`,
+    byId: (id: number) => `${apiBase}/produtos/${id}`,
+    fornecedores: (id: number) => `${apiBase}/produtos/${id}/fornecedores`,
+    fornecedorById: (produtoId: number, fornecedorId: number) =>
+      `${apiBase}/produtos/${produtoId}/fornecedores/${fornecedorId}`,
+  },
   health: () => `${apiBase}/health`,
 } as const;

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import type { FormEvent } from "react";
-import { AppShell } from "../components/AppShell";
+import { SideBar } from "../components/SideBar";
 import { FornecedoresPanel } from "../components/FornecedoresPanel";
 import { categoryIconColors, theme } from "../constants/theme";
 import {
@@ -155,7 +155,19 @@ export function CategoriasPage() {
     "w-full rounded-lg border border-neutral-200 bg-white px-3 py-2.5 text-sm text-neutral-900 outline-none transition placeholder:text-neutral-400 focus:border-[#3E3B82] focus:ring-2 focus:ring-[#3E3B82]/10";
 
   return (
-    <AppShell title="Categorias e Fornecedores">
+    <div
+      className="font-sans flex min-h-svh w-full"
+      style={{ backgroundColor: theme.panel }}
+    >
+      <SideBar />
+
+      <main className="flex min-w-0 flex-1 flex-col px-6 py-8 sm:px-10 lg:px-12">
+        <header className="mb-8">
+          <h1 className="m-0 font-['Playfair_Display',Georgia,serif] text-[clamp(1.75rem,3vw,2.25rem)] font-semibold tracking-tight text-neutral-900">
+            Categorias e Fornecedores
+          </h1>
+        </header>
+
       <div className="grid gap-6 xl:grid-cols-2">
         <section className="flex flex-col overflow-hidden rounded-2xl border border-[#ECEAF5] bg-white shadow-[0_8px_30px_rgba(62,59,130,0.06)]">
           <div className="flex items-center justify-between border-b border-[#F0EEF8] px-5 py-4">
@@ -313,6 +325,7 @@ export function CategoriasPage() {
 
         <FornecedoresPanel />
       </div>
-    </AppShell>
+      </main>
+    </div>
   );
 }
