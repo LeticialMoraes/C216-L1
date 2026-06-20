@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import type { FormEvent } from "react";
 import { AppShell } from "../components/AppShell";
+import { FornecedoresPanel } from "../components/FornecedoresPanel";
 import { categoryIconColors, theme } from "../constants/theme";
 import {
   atualizarCategoria,
@@ -154,7 +155,7 @@ export function CategoriasPage() {
     "w-full rounded-lg border border-neutral-200 bg-white px-3 py-2.5 text-sm text-neutral-900 outline-none transition placeholder:text-neutral-400 focus:border-[#3E3B82] focus:ring-2 focus:ring-[#3E3B82]/10";
 
   return (
-    <AppShell title="Categorias & Fornecedores">
+    <AppShell title="Categorias e Fornecedores">
       <div className="grid gap-6 xl:grid-cols-2">
         <section className="flex flex-col overflow-hidden rounded-2xl border border-[#ECEAF5] bg-white shadow-[0_8px_30px_rgba(62,59,130,0.06)]">
           <div className="flex items-center justify-between border-b border-[#F0EEF8] px-5 py-4">
@@ -310,36 +311,7 @@ export function CategoriasPage() {
           </form>
         </section>
 
-        <section className="flex flex-col overflow-hidden rounded-2xl border border-[#ECEAF5] bg-white shadow-[0_8px_30px_rgba(62,59,130,0.06)]">
-          <div className="flex items-center justify-between border-b border-[#F0EEF8] px-5 py-4">
-            <h2
-              className="m-0 text-base font-semibold"
-              style={{ color: theme.primary }}
-            >
-              Fornecedores
-            </h2>
-            <button
-              type="button"
-              className="rounded-lg px-3 py-1.5 text-xs font-semibold text-white opacity-60"
-              style={{ backgroundColor: theme.primary }}
-              disabled
-            >
-              Novo
-            </button>
-          </div>
-          <div className="flex flex-1 flex-col items-center justify-center px-5 py-16 text-center">
-            <p
-              className="m-0 text-sm font-medium"
-              style={{ color: theme.primary }}
-            >
-              Em breve
-            </p>
-            <p className="m-0 mt-2 max-w-xs text-sm text-neutral-500">
-              A gestão de fornecedores será integrada neste painel na próxima
-              etapa.
-            </p>
-          </div>
-        </section>
+        <FornecedoresPanel />
       </div>
     </AppShell>
   );

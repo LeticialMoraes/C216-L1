@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import authRouter from "./routes/auth";
 import categoriasRouter from "./routes/categorias";
+import fornecedoresRouter from "./routes/fornecedores";
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
@@ -23,6 +24,7 @@ app.get("/health", (_req, res) => {
 
 app.use("/auth", authRouter);
 app.use("/categorias", categoriasRouter);
+app.use("/fornecedores", fornecedoresRouter);
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`API em http://0.0.0.0:${PORT}`);
