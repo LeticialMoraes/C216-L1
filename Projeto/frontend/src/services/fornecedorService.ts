@@ -7,6 +7,7 @@ export type Fornecedor = {
   email: string | null;
   telefone: string | null;
   ativo: boolean;
+  produtosVinculados: number;
   createdAt: string;
 };
 

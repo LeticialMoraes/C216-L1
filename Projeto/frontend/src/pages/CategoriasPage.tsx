@@ -34,6 +34,13 @@ function DeleteIcon() {
   );
 }
 
+function formatTotalProdutos(count: number): string {
+  if (count === 1) {
+    return "1 produto";
+  }
+  return `${count} produtos`;
+}
+
 export function CategoriasPage() {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [loading, setLoading] = useState(true);
@@ -278,7 +285,7 @@ export function CategoriasPage() {
                               {categoria.nome}
                             </p>
                             <p className="m-0 mt-0.5 text-xs text-neutral-500">
-                              0 produtos
+                              {formatTotalProdutos(categoria.totalProdutos)}
                             </p>
                           </>
                         )}

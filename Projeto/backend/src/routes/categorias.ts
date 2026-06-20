@@ -6,6 +6,7 @@ import {
   atualizarCategoria,
   deletarCategoria,
   type CategoriaRow,
+  type CategoriaListRow,
 } from "../models/categoria";
 import {
   requireAuth,
@@ -27,11 +28,12 @@ function parseIdParam(raw: string | string[] | undefined): number | null {
   return id;
 }
 
-function toJson(row: CategoriaRow) {
+function toJson(row: CategoriaRow | CategoriaListRow) {
   return {
     id: row.id,
     nome: row.nome,
     descricao: row.descricao,
+    totalProdutos: "total_produtos" in row ? row.total_produtos : 0,
     createdAt: row.created_at,
   };
 }

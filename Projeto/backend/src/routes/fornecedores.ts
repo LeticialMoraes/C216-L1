@@ -6,6 +6,7 @@ import {
   atualizarFornecedor,
   deletarFornecedor,
   type FornecedorRow,
+  type FornecedorListRow,
 } from "../models/fornecedor";
 import {
   requireAuth,
@@ -29,13 +30,15 @@ function parseIdParam(raw: string | string[] | undefined): number | null {
   return id;
 }
 
-function toJson(row: FornecedorRow) {
+function toJson(row: FornecedorRow | FornecedorListRow) {
   return {
     id: row.id,
     nome: row.nome,
     email: row.email,
     telefone: row.telefone,
     ativo: row.ativo,
+    produtosVinculados:
+      "produtos_vinculados" in row ? row.produtos_vinculados : 0,
     createdAt: row.created_at,
   };
 }

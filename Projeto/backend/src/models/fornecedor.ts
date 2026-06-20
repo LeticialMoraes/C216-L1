@@ -9,13 +9,24 @@ export type FornecedorRow = {
   created_at: Date;
 };
 
-export async function listarFornecedores(): Promise<FornecedorRow[]> {
+export type FornecedorListRow = FornecedorRow & {
+  produtos_vinculados: number;
+};
+
+export async function listarFornecedores(): Promise<FornecedorListRow[]> {
   if (!pool) {
     throw new Error("POOL_UNAVAILABLE");
   }
 
-  const result = await pool.query<FornecedorRow>(
-    "SELECT * FROM fornecedores ORDER BY nome",
+  const result = await pool.query<FornecedorListRow>(
+    `SELECT f.*,
+            (
+              SELECT COUNT(*)::int
+              FROM produto_fornecedor pf
+              WHERE pf.fornecedor_id = f.id
+            ) AS produtos_vinculados
+     FROM fornecedores f
+     ORDER BY f.nome`,
   );
   return result.rows;
 }

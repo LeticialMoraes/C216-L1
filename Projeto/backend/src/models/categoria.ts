@@ -7,13 +7,24 @@ export type CategoriaRow = {
   created_at: Date;
 };
 
-export async function listarCategorias(): Promise<CategoriaRow[]> {
+export type CategoriaListRow = CategoriaRow & {
+  total_produtos: number;
+};
+
+export async function listarCategorias(): Promise<CategoriaListRow[]> {
   if (!pool) {
     throw new Error("POOL_UNAVAILABLE");
   }
 
-  const result = await pool.query<CategoriaRow>(
-    "SELECT * FROM categorias ORDER BY nome",
+  const result = await pool.query<CategoriaListRow>(
+    `SELECT c.*,
+            (
+              SELECT COUNT(*)::int
+              FROM produtos p
+              WHERE p.categoria_id = c.id
+            ) AS total_produtos
+     FROM categorias c
+     ORDER BY c.nome`,
   );
   return result.rows;
 }
