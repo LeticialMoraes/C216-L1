@@ -1,6 +1,7 @@
 import { Router, type Request, type Response } from "express";
 import bcrypt from "bcrypt";
 import { pool } from "../../db/pool";
+import { signAuthToken } from "../lib/authToken";
 
 const router = Router();
 
@@ -99,12 +100,19 @@ router.post("/login", async (req: Request, res: Response) => {
       return;
     }
 
+    const token = signAuthToken({
+      sub: row.id,
+      email: row.email,
+      accessProfile: row.access_profile,
+    });
+
     res.json({
       id: row.id,
       email: row.email,
       firstName: row.first_name,
       lastName: row.last_name,
       accessProfile: row.access_profile,
+      token,
       message: "Sessão iniciada com sucesso.",
     });
   } catch (e) {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { paths } from "../routes/paths";
 import { PasswordInput } from "../components/PasswordInput";
 import { loginUser } from "../services/authService";
@@ -54,6 +54,7 @@ const features = [
 ] as const;
 
 export function LoginPage() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -81,6 +82,7 @@ export function LoginPage() {
       messageToasts.success(
         `Sessão iniciada como ${user.firstName} ${user.lastName}.`,
       );
+      navigate(paths.categories);
     } catch (err) {
       messageToasts.error(
         err instanceof Error ? err.message : "Erro ao iniciar sessão.",

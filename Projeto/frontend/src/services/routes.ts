@@ -8,5 +8,9 @@ export const routes = {
     register: () => `${apiBase}/auth/register`,
     login: () => `${apiBase}/auth/login`,
   },
+  categorias: {
+    list: () => `${apiBase}/categorias`,
+    byId: (id: number) => `${apiBase}/categorias/${id}`,
+  },
   health: () => `${apiBase}/health`,
 } as const;

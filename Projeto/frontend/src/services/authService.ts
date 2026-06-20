@@ -1,4 +1,5 @@
 import { routes } from "./routes";
+import { saveAuthSession } from "../utils/authStorage";
 
 export type RegisterPayload = {
   firstName: string;
@@ -19,6 +20,7 @@ export type LoginSuccess = {
   firstName: string;
   lastName: string;
   accessProfile: string;
+  token: string;
   message: string;
 };
 
@@ -52,7 +54,19 @@ export async function loginUser(payload: LoginPayload): Promise<LoginSuccess> {
     throw new Error(msg);
   }
 
-  return data as LoginSuccess;
+  const user = data as LoginSuccess;
+
+  if (user.token) {
+    saveAuthSession(user.token, {
+      id: user.id,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      accessProfile: user.accessProfile,
+    });
+  }
+
+  return user;
 }
 
 export async function registerUser(
