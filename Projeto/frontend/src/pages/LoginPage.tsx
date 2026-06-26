@@ -197,13 +197,13 @@ export function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <div className="mt-2 text-end">
-                <a
+                <Link
                   className="text-xs font-semibold no-underline hover:underline"
                   style={{ color: C.gold }}
-                  href="#recuperar-senha"
+                  to={paths.forgotPassword}
                 >
                   Esqueci minha senha
-                </a>
+                </Link>
               </div>
             </div>
 

@@ -7,8 +7,10 @@ import { CategoriasPage } from "./pages/CategoriasPage";
 import { FornecedoresPage } from "./pages/FornecedoresPage";
 import { MovimentacoesPage } from "./pages/MovimentacoesPage";
 import { ProdutosPage } from "./pages/ProdutosPage";
+import { ForgotPasswordPage } from "./pages/ForgotPasswordPage";
 import { LoginPage } from "./pages/LoginPage";
 import { RelatoriosPage } from "./pages/RelatoriosPage";
+import { ProfilePage } from "./pages/ProfilePage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { paths } from "./routes/paths";
 
@@ -24,6 +26,7 @@ export default function App() {
         />
         <Route path={paths.register} element={<RegisterPage />} />
         <Route path={paths.login} element={<LoginPage />} />
+        <Route path={paths.forgotPassword} element={<ForgotPasswordPage />} />
         <Route
           path={paths.dashboard}
           element={
@@ -69,6 +72,14 @@ export default function App() {
           element={
             <RequireAuth>
               <RelatoriosPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path={paths.profile}
+          element={
+            <RequireAuth>
+              <ProfilePage />
             </RequireAuth>
           }
         />

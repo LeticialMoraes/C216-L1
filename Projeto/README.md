@@ -22,6 +22,8 @@
 ## Funcionalidades
 
 - **Autenticação** com token Bearer (registro, login, perfis de acesso)
+- **Recuperação de senha** — redefinição direta por e-mail e nova senha (sem token por e-mail)
+- **Perfil do utilizador** — consulta e edição de nome, e-mail e senha; botão **Sair** na barra lateral
 - **Produtos** — cadastro com SKU único, preço, quantidade e tamanhos disponíveis
 - **Categorias** — agrupamento e classificação dos produtos
 - **Fornecedores** — parceiros comerciais com vínculo N:M aos produtos
@@ -57,7 +59,7 @@ Projeto/
 │   └── tests/            # testes unitários e de integração
 └── frontend/
     └── src/
-        ├── pages/        # 8 telas (Login, Register, Dashboard, Produtos, ...)
+        ├── pages/        # 10 telas (Login, Register, ForgotPassword, Profile, Dashboard, ...)
         ├── services/     # chamadas à API REST
         ├── components/   # componentes reutilizáveis
         └── utils/        # helpers (CSV, máscaras, toasts, ...)
@@ -74,7 +76,7 @@ Projeto/
 ```bash
 cd Projeto
 cp .env.example .env
-docker compose up --build
+docker compose up -d --build
 ```
 
 Aguarde até ver a mensagem `Backend running on port 3000` no log. O backend executa as migrations automaticamente ao iniciar.
@@ -114,7 +116,9 @@ npm run dev
 
 1. Acesse http://localhost:5173/register e crie uma conta.
 2. Faça login — você será redirecionado ao dashboard.
-3. **Ordem recomendada de cadastro:** Categorias → Fornecedores → Produtos → Movimentações.
+3. Na barra lateral, use **Editar perfil** para alterar os seus dados ou **Sair** para terminar a sessão.
+4. Esqueceu a senha? Na tela de login, clique em **Esqueci minha senha** (`/forgot-password`).
+5. **Ordem recomendada de cadastro:** Categorias → Fornecedores → Produtos → Movimentações.
 
 > Todas as rotas de negócio exigem o header `Authorization: Bearer <token>`, gerado automaticamente pelo frontend após o login.
 
@@ -249,7 +253,7 @@ Restrição `UNIQUE (produto_id, fornecedor_id)` impede vínculos duplicados.
 
 ## API REST
 
-A API expõe **25 endpoints** no total. Todas as rotas de negócio exigem o header `Authorization: Bearer <token>`.
+A API expõe **28 endpoints** no total. Todas as rotas de negócio exigem o header `Authorization: Bearer <token>`.
 
 ### Autenticação — rotas públicas
 
@@ -258,6 +262,14 @@ A API expõe **25 endpoints** no total. Todas as rotas de negócio exigem o head
 | `GET` | `/health` | Health check da API |
 | `POST` | `/auth/register` | Cadastro de novo usuário |
 | `POST` | `/auth/login` | Login — retorna token Bearer |
+| `POST` | `/auth/reset-password` | Redefinir senha por e-mail (`email`, `password`) |
+
+### Autenticação — rotas protegidas
+
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| `GET` | `/auth/me` | Dados do utilizador autenticado |
+| `PUT` | `/auth/me` | Atualizar nome, e-mail e/ou senha — retorna novo token |
 
 ### CRUD completo (GET · POST · PUT · DELETE)
 
@@ -291,18 +303,22 @@ A API expõe **25 endpoints** no total. Todas as rotas de negócio exigem o head
 
 ## Frontend
 
-O frontend possui **8 telas** acessíveis via React Router:
+O frontend possui **10 telas** acessíveis via React Router:
 
 | Rota | Tela | Descrição |
 |------|------|-----------|
-| `/login` | Login | Autenticação do usuário |
+| `/login` | Login | Autenticação do usuário (com link para recuperação de senha) |
 | `/register` | Cadastro | Criação de nova conta |
+| `/forgot-password` | Recuperar senha | Redefinição de senha por e-mail |
+| `/profile` | Meu perfil | Edição de dados pessoais e senha |
 | `/dashboard` | Dashboard | Métricas, alertas de estoque crítico e últimas movimentações |
 | `/products` | Produtos | Listagem, cadastro, edição, exclusão e vínculos com fornecedores |
 | `/categories` | Categorias | Gerenciamento de categorias |
 | `/suppliers` | Fornecedores | Gerenciamento de fornecedores |
 | `/movements` | Movimentações | Histórico e registro de entradas/saídas |
 | `/reports` | Relatórios | Relatórios por período com exportação para CSV |
+
+A barra lateral (`SideBar`) aparece em todas as telas autenticadas e inclui navegação principal, **Editar perfil** e **Sair** (limpa o token e redireciona para o login).
 
 ---
 

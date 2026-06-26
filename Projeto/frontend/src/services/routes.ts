@@ -1,12 +1,17 @@
 /** URL base da API (sem barra final). */
+const configuredApiBase = import.meta.env.VITE_API_URL?.trim();
 export const apiBase =
-  import.meta.env.VITE_API_URL?.replace(/\/$/, "") ?? "http://localhost:3000";
+  configuredApiBase && configuredApiBase.length > 0
+    ? configuredApiBase.replace(/\/$/, "")
+    : "http://localhost:3000";
 
 /** Caminhos da API usados pela aplicação. */
 export const routes = {
   auth: {
     register: () => `${apiBase}/auth/register`,
     login: () => `${apiBase}/auth/login`,
+    resetPassword: () => `${apiBase}/auth/reset-password`,
+    me: () => `${apiBase}/auth/me`,
   },
   categorias: {
     list: () => `${apiBase}/categorias`,

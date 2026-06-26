@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { theme } from "../constants/theme";
 import { paths } from "../routes/paths";
-import { getStoredUser } from "../utils/authStorage";
+import { clearAuthSession, getStoredUser } from "../utils/authStorage";
 
 type NavItem = {
   label: string;
@@ -76,6 +76,7 @@ const navItems: NavItem[] = [
 
 export function SideBar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const user = getStoredUser();
   const initial = user?.firstName?.charAt(0)?.toUpperCase() ?? "U";
   const displayName = user
@@ -87,6 +88,11 @@ export function SideBar() {
       : user?.accessProfile === "operador"
         ? "Operador"
         : "Visualizador";
+
+  function handleLogout() {
+    clearAuthSession();
+    navigate(paths.login, { replace: true });
+  }
 
   return (
     <aside
@@ -153,22 +159,55 @@ export function SideBar() {
         })}
       </nav>
 
-      <div className="mt-auto flex items-center gap-3 rounded-xl bg-white/70 px-3 py-3">
-        <span
-          className="flex size-9 shrink-0 items-center justify-center rounded-full text-sm font-semibold text-white"
-          style={{ backgroundColor: theme.primary }}
-        >
-          {initial}
-        </span>
-        <div className="min-w-0">
-          <p
-            className="truncate text-sm font-semibold"
-            style={{ color: theme.primary }}
+      <div className="mt-auto space-y-2">
+        <div className="flex items-center gap-3 rounded-xl bg-white/70 px-3 py-3">
+          <span
+            className="flex size-9 shrink-0 items-center justify-center rounded-full text-sm font-semibold text-white"
+            style={{ backgroundColor: theme.primary }}
           >
-            {displayName}
-          </p>
-          <p className="truncate text-xs text-neutral-500">{roleLabel}</p>
+            {initial}
+          </span>
+          <div className="min-w-0 flex-1">
+            <p
+              className="truncate text-sm font-semibold"
+              style={{ color: theme.primary }}
+            >
+              {displayName}
+            </p>
+            <p className="truncate text-xs text-neutral-500">{roleLabel}</p>
+          </div>
         </div>
+
+        <Link
+          to={paths.profile}
+          className={[
+            "flex w-full items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium transition",
+            location.pathname === paths.profile
+              ? "text-white shadow-sm"
+              : "bg-white/70 text-neutral-600 hover:bg-white",
+          ].join(" ")}
+          style={
+            location.pathname === paths.profile
+              ? { backgroundColor: theme.primary }
+              : undefined
+          }
+        >
+          <svg className="size-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden>
+            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM2.5 13.25c0-2.21 2.46-4 5.5-4s5.5 1.79 5.5 4v.5a.75.75 0 0 1-.75.75h-9.5a.75.75 0 0 1-.75-.75v-.5Z" />
+          </svg>
+          Editar perfil
+        </Link>
+
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#E8E6F2] bg-white/70 px-3 py-2.5 text-sm font-medium text-neutral-600 transition hover:bg-white hover:text-[#B91C1C]"
+        >
+          <svg className="size-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden>
+            <path d="M6 2.5a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 .75.75V4h1.25A1.75 1.75 0 0 1 14.75 5.75v4.5A1.75 1.75 0 0 1 13 12h-1.25v1.5a.75.75 0 0 1-.75.75h-4.5a.75.75 0 0 1-.75-.75V12H4a1.75 1.75 0 0 1-1.75-1.75v-4.5A1.75 1.75 0 0 1 4 5.75h1.25V2.5Zm1.5.75V4h4.5V3.25a.25.25 0 0 0-.25-.25h-4a.25.25 0 0 0-.25.25ZM4 6.5a.25.25 0 0 0-.25.25v4.5c0 .138.112.25.25.25h8a.25.25 0 0 0 .25-.25v-4.5a.25.25 0 0 0-.25-.25H4Zm3 2.25a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5a.75.75 0 0 1 .75-.75Z" />
+          </svg>
+          Sair
+        </button>
       </div>
     </aside>
   );
