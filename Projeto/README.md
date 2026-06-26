@@ -6,7 +6,7 @@
 
 ---
 
-## Índice
+## 📋 Índice
 
 1. [Funcionalidades](#funcionalidades)
 2. [Stack e estrutura](#stack-e-estrutura)
@@ -19,21 +19,21 @@
 
 ---
 
-## Funcionalidades
+## ✨ Funcionalidades
 
-- **Autenticação** com token Bearer (registro, login, perfis de acesso)
-- **Recuperação de senha** — redefinição direta por e-mail e nova senha (sem token por e-mail)
-- **Perfil do utilizador** — consulta e edição de nome, e-mail e senha; botão **Sair** na barra lateral
-- **Produtos** — cadastro com SKU único, preço, quantidade e tamanhos disponíveis
-- **Categorias** — agrupamento e classificação dos produtos
-- **Fornecedores** — parceiros comerciais com vínculo N:M aos produtos
-- **Movimentações** — registro de entradas e saídas com histórico imutável e atualização de estoque em transação atômica
-- **Dashboard** — métricas agregadas em tempo real (total de produtos, alertas de estoque crítico, últimas movimentações)
-- **Relatórios** — posição de estoque e movimentações por período, com exportação para CSV
+- 🔐 **Autenticação** com token Bearer (registro, login, perfis de acesso)
+- 🔑 **Recuperação de senha** — redefinição direta por e-mail e nova senha (sem token por e-mail)
+- 👤 **Perfil do utilizador** — consulta e edição de nome, e-mail e senha; botão **Sair** na barra lateral
+- 📦 **Produtos** — cadastro com SKU único, preço, quantidade e tamanhos disponíveis
+- 🏷️ **Categorias** — agrupamento e classificação dos produtos
+- 🏭 **Fornecedores** — parceiros comerciais com vínculo N:M aos produtos
+- 🔄 **Movimentações** — registro de entradas e saídas com histórico imutável e atualização de estoque em transação atômica
+- 📊 **Dashboard** — métricas agregadas em tempo real (total de produtos, alertas de estoque crítico, últimas movimentações)
+- 📈 **Relatórios** — posição de estoque e movimentações por período, com exportação para CSV
 
 ---
 
-## Stack e estrutura
+## 🛠️ Stack e estrutura
 
 | Camada | Tecnologia |
 |--------|------------|
@@ -67,9 +67,9 @@ Projeto/
 
 ---
 
-## Como executar
+## 🚀 Como executar
 
-### Docker (recomendado)
+### 🐳 Docker (recomendado)
 
 **Pré-requisitos:** [Docker](https://docs.docker.com/get-docker/) e [Docker Compose](https://docs.docker.com/compose/)
 
@@ -92,7 +92,7 @@ docker compose down        # parar os containers
 docker compose down -v     # parar e apagar o volume do banco
 ```
 
-### Desenvolvimento local
+### 💻 Desenvolvimento local
 
 ```bash
 # 1. Sobe apenas o banco de dados
@@ -112,7 +112,7 @@ npm install
 npm run dev
 ```
 
-### Primeiro acesso
+### 🔑 Primeiro acesso
 
 1. Acesse http://localhost:5173/register e crie uma conta.
 2. Faça login — você será redirecionado ao dashboard.
@@ -122,7 +122,7 @@ npm run dev
 
 > Todas as rotas de negócio exigem o header `Authorization: Bearer <token>`, gerado automaticamente pelo frontend após o login.
 
-### Variáveis de ambiente
+### ⚙️ Variáveis de ambiente
 
 **`Projeto/.env`** — usado pelo Docker Compose
 
@@ -148,7 +148,7 @@ npm run dev
 
 ---
 
-## Base de dados
+## 🗄️ Base de dados
 
 ### Tabelas
 
@@ -251,7 +251,7 @@ Restrição `UNIQUE (produto_id, fornecedor_id)` impede vínculos duplicados.
 
 ---
 
-## API REST
+## 🌐 API REST
 
 A API expõe **28 endpoints** no total. Todas as rotas de negócio exigem o header `Authorization: Bearer <token>`.
 
@@ -301,7 +301,7 @@ A API expõe **28 endpoints** no total. Todas as rotas de negócio exigem o head
 
 ---
 
-## Frontend
+## 🖥️ Frontend
 
 O frontend possui **10 telas** acessíveis via React Router:
 
@@ -322,7 +322,7 @@ A barra lateral (`SideBar`) aparece em todas as telas autenticadas e inclui nave
 
 ---
 
-## Testes
+## 🧪 Testes
 
 Os testes do backend rodam sem banco de dados real — o `pool` de conexões é mockado via Vitest.
 
@@ -351,7 +351,7 @@ npm run test:watch    # modo interativo (watch)
 
 ---
 
-## Boas práticas
+## ✅ Boas práticas
 
 - **Separação em camadas:** rotas → models → PostgreSQL, sem lógica de negócio nos controllers
 - **Schema versionado** com migrations via `node-pg-migrate` — o banco evolui de forma controlada e rastreável
@@ -363,6 +363,6 @@ npm run test:watch    # modo interativo (watch)
 
 ---
 
-## Autoria
+## ✍️ Autoria
 
 Projeto desenvolvido para a disciplina **C216 — Sistemas Distribuídos**, Instituto Nacional de Telecomunicações (Inatel).
