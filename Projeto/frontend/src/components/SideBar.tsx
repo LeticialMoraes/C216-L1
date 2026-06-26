@@ -64,8 +64,7 @@ const navItems: NavItem[] = [
   },
   {
     label: "Relatórios",
-    path: "#",
-    disabled: true,
+    path: paths.reports,
     icon: (
       <path
         fill="currentColor"

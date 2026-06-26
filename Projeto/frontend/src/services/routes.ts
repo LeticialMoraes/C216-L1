@@ -30,5 +30,9 @@ export const routes = {
   dashboard: {
     get: () => `${apiBase}/dashboard`,
   },
+  relatorios: {
+    estoque: () => `${apiBase}/relatorios/estoque`,
+    movimentacoes: () => `${apiBase}/relatorios/movimentacoes`,
+  },
   health: () => `${apiBase}/health`,
 } as const;

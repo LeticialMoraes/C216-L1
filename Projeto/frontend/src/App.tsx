@@ -8,6 +8,7 @@ import { FornecedoresPage } from "./pages/FornecedoresPage";
 import { MovimentacoesPage } from "./pages/MovimentacoesPage";
 import { ProdutosPage } from "./pages/ProdutosPage";
 import { LoginPage } from "./pages/LoginPage";
+import { RelatoriosPage } from "./pages/RelatoriosPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { paths } from "./routes/paths";
 
@@ -60,6 +61,14 @@ export default function App() {
           element={
             <RequireAuth>
               <MovimentacoesPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path={paths.reports}
+          element={
+            <RequireAuth>
+              <RelatoriosPage />
             </RequireAuth>
           }
         />
