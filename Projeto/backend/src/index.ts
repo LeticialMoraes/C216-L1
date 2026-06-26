@@ -5,6 +5,8 @@ import authRouter from "./routes/auth";
 import categoriasRouter from "./routes/categorias";
 import fornecedoresRouter from "./routes/fornecedores";
 import produtosRouter from "./routes/produtos";
+import movimentacoesRouter from "./routes/movimentacoes";
+import dashboardRouter from "./routes/dashboard";
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
@@ -27,6 +29,8 @@ app.use("/auth", authRouter);
 app.use("/categorias", categoriasRouter);
 app.use("/fornecedores", fornecedoresRouter);
 app.use("/produtos", produtosRouter);
+app.use("/movimentacoes", movimentacoesRouter);
+app.use("/dashboard", dashboardRouter);
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`API em http://0.0.0.0:${PORT}`);

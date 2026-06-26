@@ -14,8 +14,7 @@ type NavItem = {
 const navItems: NavItem[] = [
   {
     label: "Dashboard",
-    path: "#",
-    disabled: true,
+    path: paths.dashboard,
     icon: (
       <path
         fill="currentColor"
@@ -55,8 +54,7 @@ const navItems: NavItem[] = [
   },
   {
     label: "Movimentações",
-    path: "#",
-    disabled: true,
+    path: paths.movements,
     icon: (
       <path
         fill="currentColor"

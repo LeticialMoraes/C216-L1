@@ -170,10 +170,8 @@ export function ProdutosPage() {
     if (!termo) {
       return produtos;
     }
-    return produtos.filter(
-      (produto) =>
-        produto.nome.toLowerCase().includes(termo) ||
-        produto.sku.toLowerCase().includes(termo),
+    return produtos.filter((produto) =>
+      produto.nome.toLowerCase().includes(termo),
     );
   }, [produtos, busca]);
 
@@ -298,7 +296,7 @@ export function ProdutosPage() {
           <div className="grid gap-3 border-b border-[#F0EEF8] p-4 lg:grid-cols-[1fr_180px_180px]">
             <input
               className={inputClass}
-              placeholder="Buscar por nome ou SKU…"
+              placeholder="Buscar por nome…"
               value={busca}
               onChange={(e) => setBusca(e.target.value)}
             />
@@ -384,14 +382,11 @@ export function ProdutosPage() {
                           >
                             {produto.nome}
                           </p>
-                          <p className="m-0 mt-0.5 text-xs text-neutral-500">
-                            {produto.sku.startsWith("#")
-                              ? produto.sku
-                              : `#${produto.sku}`}
-                            {produto.tamanhos
-                              ? ` · ${produto.tamanhos}`
-                              : ""}
-                          </p>
+                          {produto.tamanhos ? (
+                            <p className="m-0 mt-0.5 text-xs text-neutral-500">
+                              {produto.tamanhos}
+                            </p>
+                          ) : null}
                         </td>
                         <td className="px-5 py-4">
                           <span

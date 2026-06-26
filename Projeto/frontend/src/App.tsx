@@ -2,8 +2,10 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { MessageToastContainer } from "./components/MessageToastContainer";
 import { ConfirmDialogContainer } from "./components/ConfirmDialogContainer";
 import { RequireAuth } from "./components/RequireAuth";
+import { DashboardPage } from "./pages/DashboardPage";
 import { CategoriasPage } from "./pages/CategoriasPage";
 import { FornecedoresPage } from "./pages/FornecedoresPage";
+import { MovimentacoesPage } from "./pages/MovimentacoesPage";
 import { ProdutosPage } from "./pages/ProdutosPage";
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
@@ -21,6 +23,14 @@ export default function App() {
         />
         <Route path={paths.register} element={<RegisterPage />} />
         <Route path={paths.login} element={<LoginPage />} />
+        <Route
+          path={paths.dashboard}
+          element={
+            <RequireAuth>
+              <DashboardPage />
+            </RequireAuth>
+          }
+        />
         <Route
           path={paths.products}
           element={
@@ -42,6 +52,14 @@ export default function App() {
           element={
             <RequireAuth>
               <FornecedoresPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path={paths.movements}
+          element={
+            <RequireAuth>
+              <MovimentacoesPage />
             </RequireAuth>
           }
         />
