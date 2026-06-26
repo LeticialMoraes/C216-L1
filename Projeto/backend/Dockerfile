@@ -11,7 +11,7 @@ COPY db ./db
 
 RUN npm run build
 
-FROM node:20-alpine
+FROM node:20-alpine AS production
 
 WORKDIR /app
 
@@ -26,3 +26,12 @@ COPY db/migrations ./db/migrations
 EXPOSE 3000
 
 CMD ["sh", "-c", "npm run migrate && node dist/src/index.js"]
+
+FROM builder AS test
+
+COPY tests ./tests
+COPY vitest.config.ts ./
+
+ENV NODE_ENV=test
+
+CMD ["npm", "test"]

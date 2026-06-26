@@ -2,7 +2,7 @@ name: fitstock
 
 services:
   db:
-    container_name: db
+    container_name: fitstock-db
     image: postgres:16-alpine
     restart: unless-stopped
     environment:
@@ -24,10 +24,11 @@ services:
       retries: 5
 
   backend:
-    container_name: backend
+    container_name: fitstock-backend
     build:
       context: ./backend
       dockerfile: Dockerfile
+      target: production
     restart: unless-stopped
     environment:
       DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-fitstock}
@@ -39,8 +40,22 @@ services:
       db:
         condition: service_healthy
 
+  test:
+    profiles: [test]
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: test
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-fitstock}
+      AUTH_SECRET: ${AUTH_SECRET:-test-secret}
+    depends_on:
+      db:
+        condition: service_healthy
+    command: npm test
+
   frontend:
-    container_name: frontend
+    container_name: fitstock-frontend
     build:
       context: ./frontend
       dockerfile: Dockerfile
